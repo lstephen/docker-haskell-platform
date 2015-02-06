@@ -3,7 +3,7 @@ MAINTAINER Levi Stephen <levi.stephen@gmail.com>
 
 ENV SRC_DIR /usr/src/app
 
-RUN mkdir -p #{SRC_DIR}
+RUN mkdir -p ${SRC_DIR}
 
 WORKDIR ${SRC_DIR}
 
