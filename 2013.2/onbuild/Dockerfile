@@ -7,8 +7,8 @@ RUN mkdir -p ${SRC_DIR}
 
 WORKDIR ${SRC_DIR}
 
-ONBUILD COPY *.cabal ${SRC_DIR}
-ONBUILD COPY Setup.* ${SRC_DIR}
+ONBUILD COPY *.cabal ${SRC_DIR}/
+ONBUILD COPY Setup.* ${SRC_DIR}/
 ONBUILD RUN cabal install --only-dependencies --global
 
 ONBUILD COPY . ${SRC_DIR}
