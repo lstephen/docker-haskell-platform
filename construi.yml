@@ -1,0 +1,38 @@
+image: lstephen/docker-push:9
+
+default: build
+
+environment:
+  - DOCKER_PUSH_NAME=lstephen/haskell-platform
+  - DOCKER_PUSH_EMAIL=levi.stephen@gmail.com
+  - DOCKER_PUSH_USERNAME
+  - DOCKER_PUSH_PASSWORD
+  - HASKELL_PLATFORM_VERSION=7.10.3
+
+volumes:
+  - /var/run/docker.sock:/var/run/docker.sock
+
+targets:
+  haskell-platform-version:
+    image: debian:jessie
+    run: /bin/bash -c "echo $HASKELL_PLATFORM_VERSION > HASKELL_PLATFORM_VERSION"
+
+  versiune:
+    before:
+      - haskell-platform-version
+    image: lstephen/versiune:8
+    run: -t '$version.$(cat HASKELL_PLATFORM_VERSION)' VERSION
+
+  build:
+    before:
+      - versiune
+    run: build
+
+  release:
+    before:
+      - version
+      - build
+    volumes:
+      - $GIT_SSH_KEY:/ssh/id_rsa
+    run: release
+
