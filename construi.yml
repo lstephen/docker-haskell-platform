@@ -30,7 +30,7 @@ targets:
 
   release:
     before:
-      - version
+      - versiune
       - build
     volumes:
       - $GIT_SSH_KEY:/ssh/id_rsa
